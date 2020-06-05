@@ -1,173 +1,121 @@
 package com.sanit.todo
 
-import android.content.Intent
+
+import android.annotation.SuppressLint
+import io.reactivex.Observable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log.e
-import android.view.*
-
-import androidx.recyclerview.widget.RecyclerView
-import android.widget.*
+import android.text.TextUtils
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.ErrorCodes
-
-
-import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.sanit.todo.Adapter.RecyclerViewAdapter
-import com.sanit.todo.Model.Notes
-import java.util.*
-import kotlin.collections.ArrayList
+import com.google.android.material.textfield.TextInputLayout
+import com.sanit.todo.Adapter.ToDoAdapter
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_to_do.*
+import kotlinx.android.synthetic.main.add_list_items.view.*
+import kotlinx.android.synthetic.main.item_does.view.*
 
 
 class ToDo : AppCompatActivity() {
 
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var etNote: EditText
-    private lateinit var etSubtitle: EditText
-    private lateinit var btnAdd: Button
-    private var notesArrayList = ArrayList<Notes>()
-    private var firebaseUser: FirebaseUser? = null
-    var RC_SIGN_IN: Int = 1234
-    private var response: IdpResponse? = null
-    var TAG : String = "TAG"
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu,menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id=item.itemId
-        if (id==R.id.refresh){
+    private lateinit var title: String
+    private lateinit var desc: String
+    private lateinit var dayt: String
 
 
-        }
-        return true
-    }
+    private var db: ToDoDB? = null
+    private var todoDAO: ToDoDAO? = null
 
+    @SuppressLint("CheckResult", "InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_to_do)
 
-        FirebaseApp.initializeApp(this)
-//        Crashlytics.getInstance().crash();
 
-        recyclerView = findViewById(R.id.ourdoes)
-        etNote = findViewById(R.id.etNote)
-        btnAdd = findViewById(R.id.btnAdd)
-        etSubtitle = findViewById(R.id.etSubtitle)
+        val button = findViewById<Button>(R.id.btn1)
+        val dltbtn = findViewById<ImageButton>(R.id.deletebtn)
 
-        val dbRef = FirebaseDatabase.getInstance().reference
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        val recyclerViewAdapter = RecyclerViewAdapter(notesArrayList)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = recyclerViewAdapter
-
-        if (firebaseUser != null) {
-
-            btnAdd.setOnClickListener { dbRef.child("Notes").child(firebaseUser!!.uid).push().setValue(Notes(etNote.text.toString(), etSubtitle.text.toString())) }
-            dbRef.child("Notes").child(firebaseUser!!.uid).addChildEventListener(object :
-                ChildEventListener {
-                override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                    val notes = dataSnapshot.getValue(Notes::class.java)
-                    notesArrayList.add(Notes(notes!!.title!!, notes.subtitle!!))
-                    recyclerViewAdapter.notifyDataSetChanged()
-                }
-
-                override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
-
-                }
-
-                override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-
-                }
-
-                override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
-
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-
-                }
-            })
-            e(TAG, firebaseUser!!.displayName)
-            e(TAG,firebaseUser!!.uid)
-        } else {
-            startActivityForResult(
-                AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setIsSmartLockEnabled(false)
-                    .setAvailableProviders(
-                        Arrays.asList(
-//                                    AuthUI.IdpConfig.GoogleBuilder().build(),
-                        AuthUI.IdpConfig.EmailBuilder().build(),
-                        AuthUI.IdpConfig.PhoneBuilder().build(),
-                        AuthUI.IdpConfig.AnonymousBuilder().build()))
-                    .build(),
-                RC_SIGN_IN)
-        }
 
 
+        Observable.fromCallable {
+            db = ToDoDB.getAPPDataBase(this)
+            todoDAO = db?.ToDoDAO()
 
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-            super.onActivityResult(requestCode, resultCode, data);
-            // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
-            if (requestCode == RC_SIGN_IN) {
-                response = IdpResponse.fromResultIntent(data);
 
-                // Successfully signed in
-                if (resultCode == RESULT_OK) {
-                    btnAdd.setOnClickListener { dbRef.child("Notes").child(firebaseUser!!.uid).push().setValue(Notes(etNote.text.toString(), etSubtitle.text.toString())) }
-                    dbRef.child("Notes").child(firebaseUser!!.uid).addChildEventListener(object : ChildEventListener {
-                        override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                            val notes = dataSnapshot.getValue(Notes::class.java)
-                            notesArrayList.add(Notes(notes!!.title!!, notes.subtitle!!))
-                            recyclerViewAdapter.notifyDataSetChanged()
-                        }
+            db?.ToDoDAO()?.getToDoList()
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
 
-                        override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
-
-                        }
-
-                        override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-
-                        }
-
-                        override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {
-
-                        }
-
-                        override fun onCancelled(databaseError: DatabaseError) {
-
-                        }
-                    })
-                    finish()
-                } else {
-                    // Sign in failed
-                    if (response == null) {
-                        // User pressed back button
-                        return
-                    }
-
-                    if (response!!.getError()!!.getErrorCode() == ErrorCodes.NO_NETWORK) {
-                        return
-                    }
-
-                    e(TAG, "Sign-in error: ", response!!.getError())
-                }
+            {
+                Log.d("size", it?.size.toString())
+                recyclerView.adapter = ToDoAdapter(it!!, this)
+            },
+            {
+                Log.d("error", "error")
             }
+
+        )
+
+        button.setOnClickListener {
+            //Inflate the dialog with custom view
+            val mDialogView = LayoutInflater.from(this).inflate(R.layout.add_list_items, null)
+            //AlertDialogBuilder
+            val mBuilder = AlertDialog.Builder(this)
+                .setView(mDialogView)
+                .setTitle("Add To Do ")
+            //show dialog
+            val mAlertDialog = mBuilder.show()
+            //login button click of custom layout
+            mDialogView.dialogAddBtn.setOnClickListener {
+                //dismiss dialog
+                mAlertDialog.dismiss()
+                //get text from EditTexts of custom layout
+                title = mDialogView.edtitle.text.toString()
+                desc = mDialogView.eddesc.text.toString()
+                dayt = mDialogView.edday.text.toString()
+
+                Toast.makeText(this, title + "" + desc + "" + dayt, Toast.LENGTH_SHORT).show()
+
+                Observable.fromCallable {
+                    db = ToDoDB.getAPPDataBase(this)
+                    todoDAO = db?.ToDoDAO()
+                    var todolist = ToDoStore(null, title, desc, dayt)
+                    with(todoDAO) {
+                        this?.insert(todolist)
+                    }
+
+                    db?.ToDoDAO()?.getToDoList()
+                }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    {
+                        Log.d("size", it?.size.toString())
+                        recyclerView.adapter = ToDoAdapter(it!!, this)
+                    },
+                    {
+                        Log.d("error", "error")
+                    }
+                )
+
+
+            }
+            mDialogView.dialogCancelBtn.setOnClickListener {
+                //dismiss dialog
+                mAlertDialog.dismiss()
+            }
+
         }
 
 
 
     }
+
 }

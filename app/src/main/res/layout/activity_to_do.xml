@@ -45,11 +45,10 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
-
             <Button
                 android:layout_marginTop="35dp"
                 android:layout_marginLeft="60dp"
-                android:id="@+id/btnAdd"
+                android:id="@+id/btn1"
                 android:text="+"
                 android:background="@drawable/bgbtnnew"
                 android:textSize="38sp"
@@ -57,6 +56,7 @@
                 android:textAlignment="center"
                 android:layout_width="52dp"
                 android:layout_height="52dp" />
+
 
         </LinearLayout>
 
@@ -69,7 +69,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ourdoes"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_marginTop="-60dp"
         android:layout_marginRight="16dp"
@@ -88,15 +88,37 @@
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/etNote"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="title" />
 
     <EditText
-        android:id="@+id/etSubtitle"
+        android:id="@+id/descr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="description" />
+
+    <EditText
+        android:id="@+id/day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="day" />
+
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delete"
+        android:layout_gravity="center_horizontal" />
+
 
 </LinearLayout>
