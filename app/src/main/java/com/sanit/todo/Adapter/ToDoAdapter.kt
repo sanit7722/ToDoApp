@@ -48,13 +48,14 @@ class ToDoAdapter(val items: List<ToDoStore>, val context: Context) :
 
                 with(todoDAO) {
                     this?.deleteByUserId(id)
+                    notifyDataSetChanged()
                 }
                 notifyItemRemoved(position)
                 db?.ToDoDAO()?.getToDoList()
             }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
                     Log.d("size", it?.size.toString())
-                    notifyItemRemoved(position)
+                    notifyDataSetChanged()
                 },
                 {
                     Log.d("error", "error")

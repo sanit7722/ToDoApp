@@ -87,38 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="title" />
 
-    <EditText
-        android:id="@+id/descr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="description" />
-
-    <EditText
-        android:id="@+id/day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="day" />
-
-
-    <Button
-        android:id="@+id/btn3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="delete"
-        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
