@@ -167,6 +167,8 @@ class ToDo : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
+                .setTheme(R.style.AppTheme_NoActionBar)
+                .setLogo(R.drawable.todoicon)
                 .build(),
             RC_SIGN_IN
         )
