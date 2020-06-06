@@ -11,7 +11,7 @@ The app is having mainly two sections:
   - **Delete TODO:** Here, you can delete your completed does from TODO list
 
 ## Video Demo (Time: 40sec)
-![Untitled-7-1280X720-378Mbps-2020](https://user-images.githubusercontent.com/33577947/83517010-c2c73780-a4f5-11ea-9847-2404963e42c3.gif)
+![Untitled-7-1280X720-378Mbps-2020](https://user-images.githubusercontent.com/42400759/83939880-f6f46e00-a7fd-11ea-8731-926e240a5c38.gif)
 
 ## Features
 * 100% made with Kotlin
