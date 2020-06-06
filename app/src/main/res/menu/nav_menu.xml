@@ -4,23 +4,23 @@
     <group>
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_profile"
-            android:title="Home" />
+            android:icon="@drawable/ic_home"
+            android:title="@string/home" />
         <item
             android:id="@+id/nav_addToDo"
-            android:icon="@drawable/ic_profile"
-            android:title="Add ToDo" />
+            android:icon="@drawable/ic_add_circle"
+            android:title="@string/add_todo" />
 
     </group>
 
 
-    <item android:title="Account Settings">
+    <item android:title="@string/account_settings">
         <menu>
 
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_signout"
-                android:title="Sign Out" />
+                android:title="@string/sign_out" />
         </menu>
     </item>
 </menu>

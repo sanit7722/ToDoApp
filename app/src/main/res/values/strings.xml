@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ToDoApp</string>
+    <string name="home">Home</string>
+    <string name="add_todo">Add ToDo</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="to_do_app">To Do APP</string>
 </resources>

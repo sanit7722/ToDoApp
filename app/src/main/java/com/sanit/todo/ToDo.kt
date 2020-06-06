@@ -82,7 +82,7 @@ class ToDo : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
 
 
         val button = findViewById<Button>(R.id.btn1)
-        val dltbtn = findViewById<ImageButton>(R.id.deletebtn)
+
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -138,7 +138,7 @@ class ToDo : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
             Observable.fromCallable {
                 db = ToDoDB.getAPPDataBase(this)
                 todoDAO = db?.ToDoDAO()
-                var todolist = ToDoStore(null, title, desc, dayt)
+                val todolist = ToDoStore(null, title, desc, dayt)
                 with(todoDAO) {
                     this?.insert(todolist)
                 }
