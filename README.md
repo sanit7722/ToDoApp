@@ -1,15 +1,14 @@
 # ToDoApp
 <h1 align="center">
   <br>
-  <img src="https://github.com/ShubhamYGS/WomenSafetyApp/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="Foco" width="160">
+  <img src="https://github.com/sanit7722/ToDoApp/blob/master/app/src/main/ic_launcher-web.png" alt="Foco" width="160">
 </h1>
 <h4 align="center">This app is a made during an event organized by Google Devs India. <a href="goo.gle/30DaysOfKotlin" target="_blank">#30DaysOfKotlin</a>.</h4>
 
 ## Getting Started
-The app is having mainly three sections:
-  - **Guardian Details:** Here, you can add or delete the list of guardians with their respective name, relation, phone numbers and email id.
-  - **Check Location:** Here, you will get the current location of the user by adding a marker on the inbuilt google map.
-  - **Emergency:** This plays an important role in the app. It sends an instant text message and mail to the list of guardians. The message contains the current location of user with google map link created.
+The app is having mainly two sections:
+  - **Add TODO:** Here, you can add your does in TODO list
+  - **Delete TODO:** Here, you can delete your completed does from TODO list
 
 ## Video Demo (Time: 40sec)
 ![Untitled-7-1280X720-378Mbps-2020](https://user-images.githubusercontent.com/33577947/83517010-c2c73780-a4f5-11ea-9847-2404963e42c3.gif)
