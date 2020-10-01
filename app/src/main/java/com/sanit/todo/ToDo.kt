@@ -100,7 +100,7 @@ class ToDo : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
                 recyclerView.adapter = ToDoAdapter(it!!, this)
             },
             {
-                Log.d("error", "error")
+                Toast.maketext(this,"error",Toast.LENGTH_SHORT).show()
             }
 
         )
@@ -150,7 +150,7 @@ class ToDo : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListene
                     recyclerView.adapter = ToDoAdapter(it!!, this)
                 },
                 {
-                    Log.d("error", "error")
+                    Toast.maketext(this,"error",Toast.LEGNTH_SHORT).show
                 }
             )
 
